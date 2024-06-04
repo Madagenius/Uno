@@ -49,3 +49,125 @@ onCreatureDisappear(function(creature)
     end
 end)
 
+
+setDefaultTab("Tools")
+
+local txtImbuis = UI.Label()
+txtImbuis:setColor("orange")
+txtImbuis:setText("COMPRAR ITEMS PARA IMBUIMENT SOLO EN NPC")
+
+local imbuimentsUI = setupUI([[
+Panel
+  height: 16
+
+  Button
+    id: editImbuimentList
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 1
+    height: 18
+    text: Imbuiments
+]], parent)
+
+g_ui.loadUIFromString([[
+ImbuimentWindow < MainWindow
+  text: IMBUIMENTS 
+  size: 200 315
+  
+  Button
+    id: lifeLeechButton
+    text: Life Leech
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 3
+    margin-left: 3
+    margin-right: 3
+    height: 20
+    font: verdana-11px-rounded
+    !tooltip: tr('comprando...')
+
+  Button
+    id: manaLeechButton
+    text: Mana Leech
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 3
+    margin-left: 3
+    margin-right: 3
+    height: 20
+    font: verdana-11px-rounded
+    !tooltip: tr('comprando...')
+
+  Button
+    id: criticalButton
+    text: Critical
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 3
+    margin-left: 3
+    margin-right: 3
+    height: 20
+    font: verdana-11px-rounded
+    !tooltip: tr('comprando...')
+
+  Button
+    id: lifeLeechx2Button
+    text: Life Leech x2
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 3
+    margin-left: 3
+    margin-right: 3
+    height: 20
+    font: verdana-11px-rounded
+    !tooltip: tr('comprando...')
+  
+  HorizontalSeparator
+    id: separator
+    anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.top: prev.bottom
+    margin-top: 6
+    margin-bottom: 6
+
+  Button
+    id: closeButton
+    text: Close
+    font: cipsoftFont
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    size: 45 21
+]])
+
+local panelName = "imbuiments"
+if not storage[panelName] then
+  storage[panelName] = {
+    enabled = false,
+  }
+end
+
+local config = storage[panelName]
+
+rootWidget = g_ui.getRootWidget()
+if rootWidget then
+  local imbuimentWindow = UI.createWindow('ImbuimentWindow', rootWidget)
+  imbuimentWindow:hide()
+
+  imbuimentsUI.editImbuimentList.onClick = function(widget)
+    imbuimentWindow:show()
+    imbuimentWindow:raise()
+    imbuimentWindow:focus()
+  end
+
+  imbuimentWindow.closeButton.onClick = function(widget)
+    imbuimentWindow:hide()
+  end
+  
+  -- Los botones y acciones para Life Leech, Mana Leech, Critical, y Life Leech x2 van aquí, siguiendo el patrón ya establecido.
+end
+
