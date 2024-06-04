@@ -1,0 +1,51 @@
+setDefaultTab("Tools")
+
+local scriptEnabled = false
+
+function toggleScript()
+    scriptEnabled = not scriptEnabled
+    if scriptEnabled then
+        say("Exeta on")
+    else
+        say("Exeta off")
+    end
+end
+
+local ui = setupUI([[
+Panel
+  height: 30
+  Button
+    id: toggleButton
+    text: exeta
+    font: cipsoftFont
+    size: 52 20
+    anchors.top: parent.top
+    margin-top: 10
+    margin-left: 10
+    anchors.left: parent.left
+]])
+ui:setId("scriptToggleButton")
+
+ui.toggleButton.onClick = function(widget)
+    toggleScript()
+end
+
+onCreatureDisappear(function(creature)
+    if not scriptEnabled then return end
+    if not creature:isMonster() then return end
+    local pos = creature:getPosition()
+    if pos.z ~= posz() then return end
+
+    local tile = g_map.getTile(pos)
+    if not tile then return end
+    local tilePos = tile:getPosition()
+    local pPos = player:getPosition()
+
+    if math.abs(pPos.x - tilePos.x) >= 2 or math.abs(pPos.y - tilePos.y) >= 2 then return end
+    if getMonsters(1) == 0 then
+        say("exeta loot")
+        delay(500)
+        return
+    end
+end)
+
